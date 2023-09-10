@@ -1,5 +1,6 @@
 import os
 import sys
+import difflib
 import argparse
 
 # 错误处理
@@ -11,6 +12,13 @@ def error_handle(msg):
 def read_file(file_path):
     with open(file_path, 'r') as f:
         return f.read()
+    
+# 计算文本相似度
+def similarity(str1, str2):
+    s = difflib.SequenceMatcher(lambda x: x in " \t\n\r.,，。",
+                                   str1,
+                                   str2)
+    return s.ratio()
 
 if __name__ == '__main__':
     # 设置运行参数
