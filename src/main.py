@@ -7,6 +7,11 @@ def error_handle(msg):
     print(f"Error: {msg}")
     sys.exit(1)
 
+# 读取文件
+def read_file(file_path):
+    with open(file_path, 'r') as f:
+        return f.read()
+
 if __name__ == '__main__':
     # 设置运行参数
     parser = argparse.ArgumentParser(description="论文查重程序")
@@ -18,3 +23,15 @@ if __name__ == '__main__':
     # 判断是否为绝对路径
     if not all (map(os.path.isabs, vars(args).values())):
         error_handle("All file paths must be absolute paths. Please check the file paths and try again.")
+
+    # 读取文件内容
+    try:
+        paper = read_file(args.paper_path)
+        copied_paper = read_file(args.copied_paper_path)
+    except FileNotFoundError as e:
+        error_handle(f"{e.filename} not found.")
+
+    # 判断内容是否为空
+    if not paper or not copied_paper:
+        error_handle("The contents of the file must not be empty.")
+    
