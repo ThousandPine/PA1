@@ -43,3 +43,14 @@ if __name__ == '__main__':
     if not paper or not copied_paper:
         error_handle("The contents of the file must not be empty.")
     
+    # 计算相似度并写入文件
+    try:
+        res = '{:.2f}'.format(similarity(paper, copied_paper))
+
+        with open(args.result_path, 'w') as f:
+            f.write(res)
+    except Exception as e:
+        error_handle(e)
+    
+    print(f"The similarity is {res}")
+    print("Everything is done!")
